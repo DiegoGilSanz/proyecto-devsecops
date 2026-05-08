@@ -15,16 +15,16 @@ pipeline {
         }
         stage('Análisis de Seguridad (Trivy)') {
             steps {
-                echo 'Buscando vulnerabilidades CRÍTICAS...' [cite: 1]
-                sh 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/aquasecurity/trivy:latest image --exit-code 1 --severity CRITICAL mi-app-segura:latest' [cite: 1]
+                echo 'Buscando vulnerabilidades CRÍTICAS...'
+                sh 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/aquasecurity/trivy:latest image --exit-code 1 --severity CRITICAL mi-app-segura:latest'
             }
         }
         stage('Despliegue en Producción (CD)') {
             steps {
-                echo '¡Imagen limpia! Desplegando en el servidor...' [cite: 1]
-                sh 'docker stop app-produccion || true' [cite: 1]
-                sh 'docker rm app-produccion || true' [cite: 1]
-                sh 'docker run -d --name app-produccion mi-app-segura:latest' [cite: 1]
+                echo '¡Imagen limpia! Desplegando en el servidor...'
+                sh 'docker stop app-produccion || true'
+                sh 'docker rm app-produccion || true'
+                sh 'docker run -d --name app-produccion mi-app-segura:latest'
             }
         }
     }
